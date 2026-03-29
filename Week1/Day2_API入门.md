@@ -134,9 +134,21 @@
 
 ---
 
-### Step 4：用 curl 重复一次（加深理解）
+### Step 4：用 PowerShell 脚本重复一次（加深理解）
 
-打开 Windows **PowerShell**，粘贴以下命令（将 `YOUR_API_KEY` 替换为真实 Key）：
+#### 4.1 解除脚本执行限制（首次需要，一次永久生效）
+
+Windows 默认禁止运行 `.ps1` 脚本文件。在 PowerShell 中执行以下命令解除限制：
+
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+```
+
+弹出确认时输入 `Y` 回车。此命令只影响当前用户，含义是"本地写的脚本可以直接运行"。
+
+#### 4.2 创建脚本文件
+
+在 `Week1` 文件夹下新建 `first_call.ps1`，内容如下（将 `YOUR_API_KEY` 替换为真实 Key）：
 
 ```powershell
 $headers = @{
@@ -160,7 +172,18 @@ Invoke-RestMethod -Uri "https://api.deepseek.com/chat/completions" `
                   -Body $body
 ```
 
-> PowerShell 原生 `curl` 是 `Invoke-WebRequest` 的别名，语法与 Linux curl 不同。上面的写法是 PowerShell 惯用方式，等价效果。
+#### 4.3 执行脚本
+
+```powershell
+cd D:\Users\hanqiang.wang\source\repos\Agent\Week1
+.\first_call.ps1
+```
+
+> **为什么用脚本文件而不是直接粘贴命令？**  
+> 多行 PowerShell 代码直接粘贴到终端时，会被逐行拆开执行导致报错。  
+> 保存为 `.ps1` 文件后整体执行，不会出现这个问题，也方便后续反复修改参数重跑。
+
+> PowerShell 原生 `curl` 是 `Invoke-WebRequest` 的别名，语法与 Linux curl 不同。上面的 `Invoke-RestMethod` 写法是 PowerShell 惯用方式，等价效果。
 
 ---
 
@@ -195,10 +218,11 @@ Invoke-RestMethod -Uri "https://api.deepseek.com/chat/completions" `
 > 在这里记录你的观察和问题：
 
 ```
-日期：
-观察到的有趣现象：
+日期：2026/03/29
 
-遗留问题：
+观察到的有趣现象：换用deepseek-reasoner模型后，确实加入了一些推导过程的细节，但我注意到额外的reasoning_tokens消耗
+
+遗留问题：虽然调用powershell成功了，但是我用的windows的powershell对utf-8的支持不好，需要接收数据后转成utf-8BOM才行，希望后续使用python调用时能处理好这个问题
 ```
 
 ---
