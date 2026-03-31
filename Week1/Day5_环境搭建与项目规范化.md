@@ -324,6 +324,7 @@ Day 5 环境健康检查
 """
 import sys
 import os
+from importlib.metadata import PackageNotFoundError, version
 
 
 def check(name: str, condition: bool, detail: str = ""):
@@ -365,9 +366,9 @@ except ImportError:
 
 # 5. python-dotenv
 try:
-    import dotenv
-    all_ok &= check("python-dotenv", True, dotenv.__version__)
-except ImportError:
+    dotenv_version = version("python-dotenv")
+    all_ok &= check("python-dotenv", True, dotenv_version)
+except PackageNotFoundError:
     all_ok &= check("python-dotenv", False, "未安装，请执行 pip install python-dotenv")
 
 # 6. .env 文件存在
