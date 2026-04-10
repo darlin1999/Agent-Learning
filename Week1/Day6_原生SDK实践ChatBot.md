@@ -371,20 +371,20 @@ Assistant: 现在是……            ← 白色/青色
 ```
 日期：2026/03/31
 完成情况：
-  - [ ] tools.py 实现完成（get_current_time + calculate）
-  - [ ] main.py 对话循环实现完成
-  - [ ] 7 个测试场景全部通过
-  - [ ] README.md 已编写
-  - [ ] 挑战 A/B/C/D 完成了 A、B
+  - [x] tools.py 实现完成（get_current_time + calculate）
+  - [x] main.py 对话循环实现完成
+  - [x] 7 个测试场景全部通过
+  - [x] README.md 已编写
+  - [x] 完成挑战 A、B
 
 核心收获：
-  - 多轮对话的实现方式：___
-  - 工具调用循环的关键判断条件：___
-  - 遇到的最大困难：___
-  - 解决方法：___
+  - 多轮对话的实现方式：messages 列表在循环外初始化，每轮将用户输入、工具调用过程、assistant 回复全部追加进去，调用 API 时完整传入，LLM 的"记忆"就是这个持续增长的列表。
+  - 工具调用循环的关键判断条件：finish_reason == "tool_calls"，代表调用工具；finish_reason == "stop"，代表LLM认为回答完成
+  - 遇到的最大困难：暂无
+  - 解决方法：暂无
 
 与 Day 4 单次调用相比的思维升级：
-  - ___
+  - 对话历史，让LLM保持拥有记忆能力
 ```
 
 ---
